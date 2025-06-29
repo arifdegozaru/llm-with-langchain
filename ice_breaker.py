@@ -1,5 +1,7 @@
 from dotenv import load_dotenv
 import os
+
+from langchain_core.output_parsers import StrOutputParser
 from langchain_core.prompts import PromptTemplate
 from langchain_openai import ChatOpenAI
 
@@ -20,7 +22,7 @@ if __name__ == "__main__":
 
     llm = ChatOpenAI(api_key=os.environ["OPEN_AI_KEY"], model_name="gpt-3.5-turbo")
 
-    chain = summary_prompt_template | llm
+    chain = summary_prompt_template | llm | StrOutputParser()
 
     res = chain.invoke(input={"information": "what is mitrais"})
 
