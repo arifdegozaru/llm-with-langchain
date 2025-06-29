@@ -4,6 +4,7 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
+
 def scrape_linkedin_profile(linkedin_profile_url: str, mock: bool = False):
     """
     scrape information from LikedIn profiles,
@@ -33,6 +34,7 @@ def scrape_linkedin_profile(linkedin_profile_url: str, mock: bool = False):
     }
 
     return data
+
 
 if __name__ == "__main__":
     print(
