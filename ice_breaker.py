@@ -5,13 +5,15 @@ from langchain_core.output_parsers import StrOutputParser
 from langchain_core.prompts import PromptTemplate
 from langchain_openai import ChatOpenAI
 
+from third_parties.linkedin import scrape_linkedin_profile
+
 if __name__ == "__main__":
     load_dotenv()
     print("Hello LangChain!")
     print(os.environ["COOL_API_KEY"])
 
     summary_template = """
-        given the information {information} about a person from I want you to create:
+        given the Linkedin information {information} about a person from I want you to create:
         1. a short summary
         2. two interesting facts about them
     """
@@ -24,6 +26,8 @@ if __name__ == "__main__":
 
     chain = summary_prompt_template | llm | StrOutputParser()
 
-    res = chain.invoke(input={"information": "what is mitrais"})
+    linkedin_data = scrape_linkedin_profile(linkedin_profile_url="https://www.linkedin.com/in/arif-hidayatulah-4817a5a8", mock=True)
+
+    res = chain.invoke(input={"information": linkedin_data})
 
     print(res)
