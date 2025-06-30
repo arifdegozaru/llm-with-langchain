@@ -6,11 +6,13 @@ from langchain.tools import Tool
 from langchain.agents import create_react_agent, AgentExecutor
 from langchain import hub
 
+from tools.tools import get_profile_url_tavily
+
 load_dotenv()
 
 
 def lookup(name: str) -> str:
-    llm = ChatOpenAI(api_key=os.environ["OPEN_AI_KEY"], model="gtp-3.5-turbo")
+    llm = ChatOpenAI(api_key=os.environ["OPEN_AI_KEY"], model="gpt-3.5-turbo")
     template = """give the full name {name_of_person} I want you to get it me a link to their Linkedin profile page.
     Your answer should contain only URL"""
 
@@ -20,7 +22,7 @@ def lookup(name: str) -> str:
     tools_for_agent = [
         Tool(
             name="Crawl Google 4 linkedin profile page",
-            func="?",
+            func=get_profile_url_tavily,
             description="useful for when you need get the Linkedin Page Url"
         )
     ]
@@ -33,8 +35,8 @@ def lookup(name: str) -> str:
         input={"input": prompt_template.format_prompt(name_of_person=name)}
     )
 
-    linkedin_url = result.output["output"]
+    linkedin_url = result["output"]
     return linkedin_url
 
 if __name__ == "__main__":
-    linkedin_url = lookup("Arif Hidayatullah")
+    linkedin_url = lookup("arif hidayatullah")

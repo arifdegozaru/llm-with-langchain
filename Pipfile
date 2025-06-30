@@ -11,6 +11,7 @@ black = "*"
 python-dotenv = "*"
 langchain-core = "*"
 langchain-openai = "*"
+langchain-tavily = "*"
 
 [dev-packages]
 
