@@ -11,11 +11,13 @@ from agents.linkedin_lookup_agent import lookup as linkedin_lookup_agent
 def ice_break_with(name: str):
     linkedin_url = linkedin_lookup_agent(name)
     linkedin_data = scrape_linkedin_profile(linkedin_profile_url=linkedin_url)
+    print(linkedin_data)
 
     summary_template = """
         given the Linkedin information {information} about a person from I want you to create:
         1. a short summary
         2. two interesting facts about them
+        but if information detail not found or empty, just answer that you couldn't find about that person
     """
     summary_prompt_template = PromptTemplate(
         input_variables=["information"], template=summary_template
@@ -33,4 +35,4 @@ if __name__ == "__main__":
     load_dotenv()
 
     print("Ice Breaker Enter")
-    ice_break_with("Kustian")
+    ice_break_with("arif hidayatullah")
